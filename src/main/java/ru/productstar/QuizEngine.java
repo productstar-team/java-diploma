@@ -2,6 +2,8 @@ package ru.productstar;
 
 import ru.productstar.dto.Question;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class QuizEngine {
@@ -10,7 +12,7 @@ public class QuizEngine {
 
     private List<Question> questions;
 
-    public void run() {
+    public void run() throws IOException, URISyntaxException {
         questions = loadQuestions();
         printIntroduction();
 
@@ -55,7 +57,7 @@ public class QuizEngine {
 
     }
 
-    List<Question> loadQuestions() {
+    List<Question> loadQuestions() throws IOException, URISyntaxException {
         List<String> data = fileReader.readFile();
         return dataParser.parseQuestions(data);
     }
