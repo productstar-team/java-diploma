@@ -7,62 +7,34 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public class QuizEngine {
-    private final FileReader fileReader = new FileReader("quiz.txt");
-    private final DataParser dataParser = new DataParser();
+    public static final String QUIT_INPUT = "q";
+    private final FileReader fileReader;
+    private final DataParser dataParser;
+    private final AnswerChecker answerChecker;
+    private final Terminal terminal;
 
     private List<Question> questions;
 
+    public QuizEngine(FileReader fileReader, DataParser dataParser, AnswerChecker answerChecker, Terminal terminal) {
+        this.fileReader = fileReader;
+        this.dataParser = dataParser;
+        this.answerChecker = answerChecker;
+        this.terminal = terminal;
+    }
+
     public void run() throws IOException, URISyntaxException {
         questions = loadQuestions();
-        printIntroduction();
+        terminal.printIntroduction();
 
         startQuiz();
     }
 
     void startQuiz() {
-        for (Question question: questions) {
-            printQuestion(question);
-            String userAnswer = System.console().readLine();
-
-            while (!isUserAnswerCorrect(userAnswer, question)) {
-                if (userAnswer.equals("q")) {
-                    return;
-                }
-                printRetry();
-                userAnswer = System.console().readLine();
-            }
-
-            congratulateUserWithCorrectAnswer();
-        }
-        congratulateUserWithQuizFinish();
-    }
-
-    private void congratulateUserWithQuizFinish() {
-
-    }
-
-    private void congratulateUserWithCorrectAnswer() {
-
-    }
-
-    private void printRetry() {
-
-    }
-
-    boolean isUserAnswerCorrect(String userAnswer, Question question) {
-        return true;
-    }
-
-    void printQuestion(Question question) {
 
     }
 
     List<Question> loadQuestions() throws IOException, URISyntaxException {
         List<String> data = fileReader.readFile();
         return dataParser.parseQuestions(data);
-    }
-
-    void printIntroduction() {
-
     }
 }
