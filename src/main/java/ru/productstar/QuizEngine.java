@@ -30,7 +30,22 @@ public class QuizEngine {
     }
 
     void startQuiz() {
+        for (Question question: questions) {
+            terminal.printQuestion(question);
+            String userAnswer = terminal.readLine();
 
+            if (userAnswer.equals(QUIT_INPUT)) {
+                return;
+            }
+
+            while (!answerChecker.isUserAnswerCorrect(userAnswer, question)) {
+                terminal.printRetry();
+                userAnswer = terminal.readLine();
+            }
+
+            terminal.congratulateUserWithCorrectAnswer();
+        }
+        terminal.congratulateUserWithQuizFinish();
     }
 
     List<Question> loadQuestions() throws IOException, URISyntaxException {
